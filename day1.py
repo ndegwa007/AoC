@@ -30,7 +30,7 @@ def treb():
     n = re.compile(r'[0-9]')
     # read the file
     with open("input.txt", "r") as file:
-        for line in file.readlines()[:-1]:
+        for line in file.readlines():
             result = re.findall(n, line)
             if len(result) > 2:
                 res = result[0] + result[-1]
@@ -40,7 +40,7 @@ def treb():
                 res = result[0] + result[0]
 
             nums.append(int(res))
-    return(sum(nums))
+    return sum(nums)
             
 
 if __name__ == "__main__":
