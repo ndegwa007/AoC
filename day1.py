@@ -21,25 +21,45 @@ a1b2c3d4e5f
 treb7uchet
 In this example, the calibration values of these four lines are 12, 38, 15, and 77. Adding these together produces 142.
 """
+
 import re
 
 def treb():
     #array to store numbers(first & last) combined
     nums = []
-    # regex pattern
+
+    nums_str = ["one","two","three","four","five","six","seven","eight","nine"]
+    # regex pattern to check numbers 
     n = re.compile(r'[0-9]')
-    # read the file
+    
+    
+    # pattern to check names that represent numbers in strings
+    p = re.compile(r'(?=(one|two|three|four|five|six|seven|eight|nine))')
+
+    # read file
     with open("input.txt", "r") as file:
         for line in file.readlines():
-            result = re.findall(n, line)
-            if len(result) > 2:
-                res = result[0] + result[-1]
-            elif len(result) == 2:
-                res = "".join(result)
+            x = line # always test original line string
+            y = "" # check for continuation in lines example sevenineight
+            words_in_line = p.findall(line)
+            #print(words_in_line)
+            for i in words_in_line:
+                line = re.sub(i, str(nums_str.index(i)+1), x)
+                y += line
+            if y != "":
+                result = re.findall(n, y)
             else:
-                res = result[0] + result[0]
+                result = re.findall(n, line)
+            if len(result) > 0:
+                if len(result) > 2:
+                    res = result[0] + result[-1]
+                elif len(result) == 2:
+                    res = "".join(result)
+                else:
+                    res = result[0] + result[0]
 
             nums.append(int(res))
+               
     return sum(nums)
             
 
